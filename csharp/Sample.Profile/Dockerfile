@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster as builder
 WORKDIR /
 
 # Copy csproj first to speed up restore
-COPY Sample.Profile.sln .
+COPY csharp/Sample.Profile/Sample.Profile.sln .
 COPY csharp/Sample.Profile/Sample.Profile/Sample.Profile.csproj Sample.Profile/
 
 RUN dotnet restore
