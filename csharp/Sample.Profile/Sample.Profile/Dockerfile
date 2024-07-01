@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Sample.Profile/Sample.Profile.csproj", "Sample.Profile/"]
+COPY ["csharp/Sample.Profile/Sample.Profile/Sample.Profile.csproj", "Sample.Profile/"]
 RUN dotnet restore "./Sample.Profile/./Sample.Profile.csproj"
 COPY . .
 WORKDIR "/src/Sample.Profile"
