@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["csharp/Sample.Profile/Sample.Profile/Sample.Profile.csproj", "Sample.Profile/"]
-RUN dotnet restore "./Sample.Profile/./Sample.Profile.csproj"
+RUN dotnet restore "Sample.Profile/Sample.Profile.csproj"
 COPY . .
 RUN dotnet build "./Sample.Profile/./Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
