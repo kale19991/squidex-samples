@@ -11,7 +11,8 @@ WORKDIR /src
 COPY ["csharp/Sample.Profile/Sample.Profile/Sample.Profile.csproj", "Sample.Profile/"]
 RUN dotnet restore "Sample.Profile/Sample.Profile.csproj"
 COPY csharp/Sample.Profile/ .
-RUN dotnet build "Sample.Profile/Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR /src/Sample.Profile/
+RUN dotnet build "Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
