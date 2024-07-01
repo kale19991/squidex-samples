@@ -7,7 +7,7 @@ WORKDIR /
 
 # Copy csproj first to speed up restore
 COPY Sample.Profile.sln .
-COPY Sample.Profile/Sample.Profile.csproj Sample.Profile/
+COPY csharp/Sample.Profile/Sample.Profile/Sample.Profile.csproj Sample.Profile/
 
 RUN dotnet restore
 
