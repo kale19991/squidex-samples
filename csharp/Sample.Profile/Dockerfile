@@ -23,10 +23,11 @@ RUN dotnet publish Sample.Profile/Sample.Profile.csproj -c Release -o /app/publi
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-COPY --from=build /src/aspnetapp.pfx .
+
 RUN dotnet publish "cshapr/Sample.Profile/Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
+COPY --from=build /src/aspnetapp.pfx .
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Sample.Profile.dll"]
