@@ -7,6 +7,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG BUILD_CONFIGURATION=Release
+ARG PASSWORD_ENV_SEEDED
+ENV PASSWORD_ENV_SEEDED=dGVzdGU=
+RUN dotnet dev-certs https -ep /src/aspnetapp.pfx -p ${PASSWORD_ENV_SEEDED}
 WORKDIR /src
 # Copy csproj first to speed up restore
 COPY Sample.Profile.sln .
@@ -20,6 +23,7 @@ RUN dotnet publish Sample.Profile/Sample.Profile.csproj -c Release -o /app/publi
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
+COPY --from=build /src/aspnetapp.pfx .
 RUN dotnet publish "cshapr/Sample.Profile/Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
