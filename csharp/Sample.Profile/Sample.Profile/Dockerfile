@@ -8,15 +8,15 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Sample.Profile/Sample.Profile.csproj", "Sample.Profile/"]
-RUN dotnet restore "./Sample.Profile/./Sample.Profile.csproj"
+COPY ["cshapr/Sample.Profile/Sample.Profile/Sample.Profile.csproj", "Sample.Profile/"]
+RUN dotnet restore "cshapr/Sample.Profile/Sample.Profile/./Sample.Profile.csproj"
 COPY . .
 WORKDIR "/src/Sample.Profile"
-RUN dotnet build "./Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "cshapr/Sample.Profile/Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "cshapr/Sample.Profile/Sample.Profile.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
